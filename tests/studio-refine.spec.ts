@@ -10,7 +10,7 @@ const viewports = {
 for (const [name, viewport] of Object.entries(viewports)) {
   test(`${name} keeps the Studio workspace readable without page overflow`, async ({ page }) => {
     await page.setViewportSize(viewport);
-    await page.goto("/");
+    await page.goto("/studio");
     await page.getByRole("heading", { name: "Customize the website" }).waitFor();
 
     const controls = await page.locator(".customization-panel").boundingBox();
@@ -38,7 +38,7 @@ for (const [name, viewport] of Object.entries(viewports)) {
 
 test("Arabic mode applies RTL direction to the complete Studio surface", async ({ page }) => {
   await page.setViewportSize(viewports.desktop);
-  await page.goto("/?dir=rtl");
+  await page.goto("/studio?dir=rtl");
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   await expect(page.getByText("Arabic · RTL")).toBeVisible();
   await expect(page.getByRole("heading", { name: "أناقة تبقى معك." })).toBeVisible();
@@ -52,7 +52,7 @@ test("Arabic mode applies RTL direction to the complete Studio surface", async (
 
 test("keyboard, focus, selection, and live updates meet the Studio quality gate", async ({ page }) => {
   await page.setViewportSize(viewports.desktop);
-  await page.goto("/");
+  await page.goto("/studio");
 
   await page.keyboard.press("Tab");
   const skipLink = page.getByRole("link", { name: "Skip to Studio workspace" });
@@ -78,7 +78,7 @@ test("keyboard, focus, selection, and live updates meet the Studio quality gate"
 
 test("reduced motion removes ambient and preview transitions", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("/");
+  await page.goto("/studio");
   const motion = await page.locator(".preview-stage").evaluate((element) => {
     const style = getComputedStyle(element);
     return { animation: style.animationName, transition: style.transitionDuration };

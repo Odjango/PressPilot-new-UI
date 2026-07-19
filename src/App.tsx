@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AmbientBackground } from "./components/AmbientBackground";
 import { CustomizationPanel } from "./components/CustomizationPanel";
 import { DownloadWorkspace } from "./components/DownloadWorkspace";
+import { MarketingHome } from "./components/MarketingHome";
 import { ProjectHeader } from "./components/ProjectHeader";
 import { ReviewWorkspace } from "./components/ReviewWorkspace";
 import { StepProgress } from "./components/StepProgress";
@@ -12,7 +13,7 @@ import { defaultProject } from "./data/sampleProjects";
 import { getStepsForFlow } from "./data/studioFlow";
 import type { StudioFlowState, StudioProjectSample } from "./types/studio";
 
-export default function App() {
+function StudioPrototype() {
   const [project, setProject] = useState(() => {
     const rtlRequested = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("dir") === "rtl";
     return rtlRequested ? {
@@ -86,4 +87,8 @@ export default function App() {
       </main>
     </div>
   );
+}
+
+export default function App() {
+  return window.location.pathname === "/studio" ? <StudioPrototype /> : <MarketingHome />;
 }

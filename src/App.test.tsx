@@ -2,8 +2,19 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";
 import App from "./App";
 
+function renderAt(path: string) {
+  window.history.replaceState({}, "", path);
+  return render(<App />);
+}
+
+test("renders the public PressPilot homepage at the root route", () => {
+  renderAt("/");
+  expect(screen.getByRole("heading", { name: "Your business, turned into a complete WordPress website." })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Start in Studio" })).toHaveAttribute("href", "/studio");
+});
+
 test("renders the approved Studio step", () => {
-  const { container } = render(<App />);
+  const { container } = renderAt("/studio");
   expect(screen.getByRole("banner")).toBeInTheDocument();
   expect(screen.getByLabelText("Ambient background")).toHaveAttribute("aria-hidden", "true");
   expect(container.querySelector(".ambient__star")).not.toBeInTheDocument();
@@ -16,7 +27,7 @@ test("renders the approved Studio step", () => {
 
 test("moves from Step 3 through inline creation to a visibly active Step 5", async () => {
   vi.useFakeTimers();
-  render(<App />);
+  renderAt("/studio");
 
   expect(screen.getByText("Customize").closest("li")).toHaveAttribute("aria-current", "step");
   fireEvent.click(screen.getByRole("button", { name: "Review website" }));
