@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 const routes = [
-  ["pricing", "/pricing", "One clear price. Your complete website."],
+  ["pricing", "/pricing", "Simple, transparent pricing"],
   ["sign in", "/signin", "Welcome back"],
   ["projects", "/projects", "Your websites"],
   ["business details", "/studio?step=details", "Tell us about the business"],
@@ -48,4 +48,27 @@ test("key page and Studio controls meet the 44px target gate", async ({ page }) 
   }
   await page.goto("/signin");
   expect((await page.getByRole("button", { name: "Sign in" }).boundingBox())!.height).toBeGreaterThanOrEqual(44);
+});
+
+test("pricing exposes one live credit pack and three disabled launch packs", async ({ page }) => {
+  await page.goto("/pricing");
+  await expect(page.getByRole("link", { name: "Get 1 credit" })).toHaveAttribute("href", "/studio?step=details");
+  for (const label of ["Get 3 credits", "Get 10 credits", "Get 25 credits"]) {
+    await expect(page.getByRole("button", { name: label })).toBeDisabled();
+  }
+  await expect(page.getByText("Coming soon")).toHaveCount(3);
+});
+
+test("Step 2 shows generation progress before replacing the PressPilot preview", async ({ page }) => {
+  await page.goto("/studio?step=layout");
+  await expect(page.getByRole("status")).toContainText("Generating your hero image");
+  await expect(page.getByRole("progressbar", { name: "Hero image generation" })).toBeVisible();
+  await expect(page.getByText("PressPilot image preview")).toHaveCount(3);
+  await page.getByRole("button", { name: "Continue to customize" }).click();
+  await expect(page.getByRole("status")).toContainText("Generating your hero image");
+  await expect(page.getByRole("button", { name: "Review website" })).toBeEnabled();
+
+  await page.goto("/studio?step=layout&hero=ready");
+  await expect(page.getByRole("status")).toContainText("Hero image ready");
+  await expect(page.getByText("PressPilot image preview")).toHaveCount(0);
 });

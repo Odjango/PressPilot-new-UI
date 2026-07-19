@@ -1,6 +1,6 @@
 # PressPilot Complete UI — Coding Agent Handoff
 
-**Version:** 1.0  
+**Version:** 1.1
 **Date:** 2026-07-19  
 **Prototype repository:** `Odjango/PressPilot-new-UI`  
 **Prototype branch:** `agent/studio-refine-prototype`
@@ -33,7 +33,7 @@ PressPilot prepares:
 
 The buyer can install the website on a compatible WordPress host, edit it with WordPress Full Site Editing, and own the delivered website.
 
-Commercial statement: **Ready in minutes · $29.99 once · No subscription**.
+Commercial model: **one credit builds one complete website · credits never expire · no subscription**. At launch, only **Single Site — $29.99 for one credit** is purchasable. Freelancer, Agency, and Studio packs are visible but disabled as Coming soon.
 
 ## 3. Terminology
 
@@ -66,12 +66,14 @@ The word `theme` may remain only where WordPress technical internals require it,
 | URL | Component | Visual capture |
 | --- | --- | --- |
 | `/` | `MarketingHome` | `artifacts/screenshots/presspilot-home-desktop.png` |
-| `/pricing` | `PricingPage` | `artifacts/screenshots/app-pricing-desktop.png` |
+| `/pricing` | `PricingPage` | `artifacts/screenshots/app-pricing-desktop.png`, `app-pricing-mobile.png` |
 | `/signin` | `SignInPage` | `artifacts/screenshots/app-signin-desktop.png` |
 | `/projects` | `ProjectsPage` | `artifacts/screenshots/app-projects-desktop.png` |
 | `/studio?step=details` | `BusinessDetailsWorkspace` | `artifacts/screenshots/studio-step-1-business-details.png` |
-| `/studio?step=layout` | `LayoutChooserWorkspace` | `artifacts/screenshots/studio-step-2-choose-layout.png` |
+| `/studio?step=layout` | `LayoutChooserWorkspace` generating state | `artifacts/screenshots/studio-step-2-choose-layout.png` |
+| `/studio?step=layout&hero=ready` | `LayoutChooserWorkspace` ready state | `artifacts/screenshots/studio-step-2-hero-ready.png` |
 | `/studio?step=customize` | `CustomizationPanel` + `WebsitePreview` | `artifacts/screenshots/studio-step-3-customize.png` |
+| `/studio?step=customize&hero=generating` | customization while the hero job is still running | `artifacts/screenshots/studio-step-3-hero-generating.png` |
 | `/studio?step=review` | `ReviewWorkspace` | `artifacts/screenshots/studio-step-4-review.png` |
 | `/studio?step=building` | `ReviewWorkspace` + `BuildLedger` | `artifacts/screenshots/studio-step-4-creating.png` |
 | `/studio?step=download` | `DownloadWorkspace` | `artifacts/screenshots/studio-step-5-download.png` |
@@ -111,14 +113,14 @@ Production migration may replace the lightweight route resolver with the product
 ### Public/account/project pages
 
 - `MarketingHome` composes the approved homepage sections.
-- `PricingPage` presents the one-time purchase, inclusions, and FAQ.
+- `PricingPage` presents all four credit packs, launch availability, the supplied FAQ, and closing CTA.
 - `SignInPage` is a focused authentication surface; its form is visual only.
 - `ProjectsPage` displays contextual project actions from `src/data/projectDashboard.ts`.
 
 ### Studio workspaces
 
 - `BusinessDetailsWorkspace` — business brief, logo state, language, optional contact details, readiness summary.
-- `LayoutChooserWorkspace` — four homepage directions with real miniature compositions.
+- `LayoutChooserWorkspace` — existing hero-image generation status plus four homepage directions with real miniature compositions.
 - `CustomizationPanel` — typography, palette, headline, and layout-change action.
 - `WebsitePreview` — the real website preview shared by customization and review.
 - `ReviewWorkspace` — Step 4 review and creation-processing shell.
@@ -154,7 +156,13 @@ Production requirements:
 - Persist the project between steps.
 - Restore the correct step on refresh or direct navigation.
 - Prevent impossible states when required data is absent.
-- Replace prototype timers with real generation status events.
+- Do not start hero-image generation on Step 1.
+- Continuing from Step 1 must start the existing hero-image job and enter Step 2.
+- Step 2 must show the existing production PressPilot background image and existing working progress bar until the hero is ready.
+- Layout, typography, palette, and headline choices must remain usable while the hero job runs; do not add a new step or block customization.
+- When ready, replace the PressPilot background in place with the generated hero image.
+- If the user reaches customization before completion, preserve the placeholder/progress rather than showing a false finished image.
+- Replace the prototype demonstration timer with the existing production hero-generation request and progress events.
 - Preserve the reviewed version through generation and download.
 
 ## 7. Integration seams
@@ -164,6 +172,9 @@ The prototype uses local state and sample data. Connect these seams to productio
 | Prototype interaction | Production integration |
 | --- | --- |
 | Business detail changes | Project create/update API and validation |
+| Continue from Business details | Start the existing hero-image generation request, then enter Step 2 |
+| Step 2 PressPilot image/progress | Reuse the existing production PressPilot background asset and working progress source; do not replace either with prototype CSS/timers |
+| Hero-image completion | Replace the background with the returned hero asset in the current preview/gallery boundary |
 | Replace logo | Existing upload/storage pipeline and logo-color analysis |
 | Language change | Project locale and direction settings |
 | Layout choice | Existing layout/gallery-preview identifier |
@@ -174,13 +185,24 @@ The prototype uses local state and sample data. Connect these seams to productio
 | Download website ZIP | Existing signed/downloadable artifact endpoint |
 | Sign in | Production authentication and password recovery |
 | Projects page | Production project query, statuses, and permissions |
-| Pricing CTA | Production checkout/entitlement flow where required |
+| Single Site “Get 1 credit” | Production one-credit checkout and entitlement flow |
+| Freelancer, Agency, Studio actions | Keep disabled and visibly Coming soon for launch; do not attach checkout handlers |
 
 Do not replace the current production gallery-preview system with the prototype miniature. The approved Studio preview surface should be connected to that system after visual migration, as the user explicitly requested.
 
 ## 8. Copy and action contract
 
 Public primary CTA: **Start in Studio**.
+
+Pricing launch contract:
+
+- Single Site — $29.99 one-time — 1 credit — active `Get 1 credit` purchase action
+- Freelancer — $74.99 one-time — 3 credits — Coming soon, disabled
+- Agency — $199.99 one-time — 10 credits — Most popular + Coming soon, disabled
+- Studio — $449.99 one-time — 25 credits — Coming soon, disabled
+- One credit creates one complete website.
+- Credits never expire.
+- There is no subscription and no automatic renewal.
 
 Use contextual internal actions:
 
@@ -286,8 +308,8 @@ When migrating, consolidate only after visual parity is established. Prematurely
 1. Copy tokens, font loading, focus behavior, and ambient system into the production design layer.
 2. Migrate shared public/application headers, footer, project header, and progress indicator.
 3. Migrate Projects and the Step 1 Business details shell around existing production data.
-4. Migrate Step 2 and map its selected IDs to the current layout/gallery data.
-5. Migrate Step 3 controls while connecting `WebsitePreview` styling to the current gallery-preview system.
+4. Migrate Step 2, map its selected IDs to current layout/gallery data, and bind its progress/placeholder to the existing hero-image job and PressPilot background asset.
+5. Migrate Step 3 controls while connecting `WebsitePreview` styling to the current gallery-preview system and preserving any still-running hero state.
 6. Migrate Step 4 review and bind the building ledger to real generation events.
 7. Migrate Step 5 and connect the real website ZIP plus install instructions.
 8. Migrate public Pricing/Sign in/Homepage pages as appropriate to the production deployment boundary.
@@ -321,7 +343,7 @@ Not implemented in this UI repository:
 - Real authentication or account recovery
 - Database persistence
 - Logo upload/storage
-- Checkout or entitlement
+- Checkout or entitlement wiring (the Single Site control is visually active but remains a prototype route)
 - Production website generation
 - Generation failure/retry handling
 - Real ZIP creation/download
@@ -336,6 +358,10 @@ These are deliberate integration boundaries, not missing visual pages.
 - [ ] Public terminology says website, not theme, except where technically required.
 - [ ] Entry CTAs lead to Business details.
 - [ ] Existing project data survives navigation and refresh.
+- [ ] Step 1 does not start hero-image generation.
+- [ ] Entering Step 2 starts the existing production hero job and shows the existing PressPilot background/progress.
+- [ ] Users can continue choosing layouts and styling while the hero job runs.
+- [ ] The generated hero replaces the placeholder in place when ready.
 - [ ] Layout selection maps to real gallery-preview data.
 - [ ] Studio preview connects to the current gallery-preview system.
 - [ ] Arabic applies full structural RTL.
@@ -343,7 +369,7 @@ These are deliberate integration boundaries, not missing visual pages.
 - [ ] Key targets are at least 44px and keyboard focus is visible.
 - [ ] Reduced-motion mode remains stable.
 - [ ] Generation errors and retry states are added using real backend results.
+- [ ] Pricing shows four tiers, with only Single Site purchasable at launch and all other pack controls natively disabled.
 - [ ] ZIP download uses the production artifact endpoint.
 - [ ] The green X/star is absent.
 - [ ] Visual parity is compared against `artifacts/screenshots/` before release.
-

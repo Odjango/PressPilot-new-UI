@@ -1,7 +1,8 @@
 import { ExternalLink, Maximize2, Monitor, Smartphone } from "lucide-react";
 import type { StudioProjectSample } from "../types/studio";
+import type { HeroGenerationState } from "./LayoutChooserWorkspace";
 
-export function WebsitePreview({ project, isUpdating, compactMetadata = false }: { project: StudioProjectSample; isUpdating: boolean; compactMetadata?: boolean }) {
+export function WebsitePreview({ project, isUpdating, compactMetadata = false, heroState = "ready", heroProgress = 100 }: { project: StudioProjectSample; isUpdating: boolean; compactMetadata?: boolean; heroState?: HeroGenerationState; heroProgress?: number }) {
   const style = { "--preview-accent": project.palette.swatches[2], "--preview-ink": project.palette.swatches[1], fontFamily: project.typography.family } as React.CSSProperties;
   return (
     <section className="website-preview" aria-label="Website preview">
@@ -30,8 +31,16 @@ export function WebsitePreview({ project, isUpdating, compactMetadata = false }:
               <div className="sample-proof"><span>Independent labels</span><i /><span>Free delivery over $120</span></div>
             </div>
             <div className="sample-hero__visual">
-              <img src={project.heroAsset} alt={`${project.name} collection`} />
-              <div className="sample-caption"><span>01</span><p>Quietly confident essentials<br />for everyday wear.</p></div>
+              {heroState === "ready" ? <>
+                <img src={project.heroAsset} alt={`${project.name} collection`} />
+                <div className="sample-caption"><span>01</span><p>Quietly confident essentials<br />for everyday wear.</p></div>
+              </> : <div className="preview-hero-generating" role="status" aria-live="polite">
+                <span className="preview-hero-generating__mark">PP</span>
+                <strong>Generating your hero image</strong>
+                <small>The PressPilot preview stays here until your image is ready.</small>
+                <progress aria-label="Hero image generation" max="100" value={heroProgress}>{heroProgress}%</progress>
+                <em>{heroProgress}%</em>
+              </div>}
             </div>
           </main>
         </div>
@@ -41,9 +50,9 @@ export function WebsitePreview({ project, isUpdating, compactMetadata = false }:
         <div><span>Layout</span><strong>{project.layout.name}</strong></div>
         <div><span>Typography</span><strong>{project.typography.name}</strong></div>
         <div><span>Palette</span><strong>{project.palette.name}</strong></div>
-        <div className="preview-metadata__status"><span className="status-dot" /> <strong>{isUpdating ? "Updating preview…" : "Preview synced"}</strong></div>
+        <div className="preview-metadata__status"><span className="status-dot" /> <strong>{heroState === "generating" ? "Hero image generating…" : isUpdating ? "Updating preview…" : "Preview synced"}</strong></div>
       </div>}
-      <div className="sr-only" aria-live="polite">{isUpdating ? "Updating preview…" : "Preview updated"}</div>
+      <div className="sr-only" aria-live="polite">{heroState === "generating" ? `Hero image generation ${heroProgress}% complete` : isUpdating ? "Updating preview…" : "Preview updated"}</div>
     </section>
   );
 }

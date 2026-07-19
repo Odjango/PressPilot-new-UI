@@ -3,12 +3,15 @@ import { mkdir } from "node:fs/promises";
 
 const outputDirectory = "artifacts/screenshots";
 const captures = [
-  ["app-pricing-desktop", "/pricing", "One clear price. Your complete website.", 1440, 1000],
+  ["app-pricing-desktop", "/pricing", "Simple, transparent pricing", 1440, 1000],
+  ["app-pricing-mobile", "/pricing", "Simple, transparent pricing", 390, 844],
   ["app-signin-desktop", "/signin", "Welcome back", 1440, 1000],
   ["app-projects-desktop", "/projects", "Your websites", 1440, 1000],
   ["studio-step-1-business-details", "/studio?step=details", "Tell us about the business", 1440, 1100],
   ["studio-step-2-choose-layout", "/studio?step=layout", "Choose a homepage direction", 1440, 1100],
+  ["studio-step-2-hero-ready", "/studio?step=layout&hero=ready", "Choose a homepage direction", 1440, 1100],
   ["studio-step-3-customize", "/studio?step=customize", "Customize the website", 1440, 1100],
+  ["studio-step-3-hero-generating", "/studio?step=customize&hero=generating", "Customize the website", 1440, 1100],
   ["studio-step-4-review", "/studio?step=review", "Review the website", 1440, 1100],
   ["studio-step-4-creating", "/studio?step=building", "Creating your website", 1440, 1100],
   ["studio-step-5-download", "/studio?step=download", "Your website is ready", 1440, 1100],

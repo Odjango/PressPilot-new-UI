@@ -16,17 +16,19 @@ Open `http://localhost:4173`.
 ## Main routes
 
 - `/` — public homepage
-- `/pricing` — full pricing page
+- `/pricing` — four-tier credit pricing page; only Single Site is enabled for launch
 - `/signin` — sign-in page
 - `/projects` — project dashboard
 - `/studio?step=details` — Studio Step 1
-- `/studio?step=layout` — Studio Step 2
+- `/studio?step=layout` — Studio Step 2 with the hero-image generation placeholder and progress
 - `/studio?step=customize` — Studio Step 3
 - `/studio?step=review` — Studio Step 4 review
 - `/studio?step=building` — Studio Step 4 creating state
 - `/studio?step=download` — Studio Step 5
 
 Append `&dir=rtl` to a Studio URL to inspect the Arabic RTL demonstration project.
+
+For visual review only, append `&hero=ready` to Step 2 to inspect the completed hero state. Production migration must use the existing real hero-generation job, progress bar, and PressPilot background image instead of the prototype timer and CSS placeholder.
 
 ## Verification
 

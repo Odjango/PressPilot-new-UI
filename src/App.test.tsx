@@ -16,7 +16,7 @@ test("renders the public PressPilot homepage at the root route", () => {
 });
 
 test.each([
-  ["/pricing", "One clear price. Your complete website."],
+  ["/pricing", "Simple, transparent pricing"],
   ["/signin", "Welcome back"],
   ["/projects", "Your websites"],
 ])("renders the %s product page", (path, heading) => {

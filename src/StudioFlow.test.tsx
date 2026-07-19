@@ -10,6 +10,8 @@ test("connects every Studio step to an honest deep-link state", async () => {
   expect(screen.getByText("Business details").closest("li")).toHaveAttribute("aria-current", "step");
   fireEvent.click(screen.getByRole("button", { name: "Continue to layouts" }));
   expect(window.location.search).toContain("step=layout");
+  expect(screen.getByRole("status")).toHaveTextContent("Generating your hero image");
+  expect(screen.getByRole("progressbar", { name: "Hero image generation" })).toBeInTheDocument();
   fireEvent.click(screen.getByRole("button", { name: "Continue to customize" }));
   expect(window.location.search).toContain("step=customize");
   fireEvent.click(screen.getByRole("button", { name: "Review website" }));

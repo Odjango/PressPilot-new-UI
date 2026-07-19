@@ -13,3 +13,12 @@ test("renders the real website preview surface", () => {
   expect(screen.getByText(defaultProject.palette.name)).toBeInTheDocument();
   expect(screen.queryByText(/social ad/i)).not.toBeInTheDocument();
 });
+
+test("keeps customization honest while the hero image is still generating", () => {
+  render(<WebsitePreview project={defaultProject} isUpdating={false} heroState="generating" heroProgress={44} />);
+  expect(screen.getByRole("status")).toHaveTextContent("Generating your hero image");
+  expect(screen.getByRole("progressbar", { name: "Hero image generation" })).toHaveAttribute("value", "44");
+  expect(screen.queryByRole("img", { name: /amigo store collection/i })).not.toBeInTheDocument();
+  expect(screen.getByText("Hero image generating…")).toBeInTheDocument();
+  expect(screen.getByText("Hero image generation 44% complete")).toBeInTheDocument();
+});

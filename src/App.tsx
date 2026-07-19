@@ -3,7 +3,7 @@ import { AmbientBackground } from "./components/AmbientBackground";
 import { BusinessDetailsWorkspace } from "./components/BusinessDetailsWorkspace";
 import { CustomizationPanel } from "./components/CustomizationPanel";
 import { DownloadWorkspace } from "./components/DownloadWorkspace";
-import { LayoutChooserWorkspace } from "./components/LayoutChooserWorkspace";
+import { LayoutChooserWorkspace, type HeroGenerationState } from "./components/LayoutChooserWorkspace";
 import { MarketingHome } from "./components/MarketingHome";
 import { PricingPage } from "./components/PricingPage";
 import { ProjectsPage } from "./components/ProjectsPage";
@@ -32,6 +32,12 @@ function StudioPrototype() {
     } : defaultProject;
   });
   const [flow, setFlow] = useState<StudioFlowState>(() => resolveStudioStep(window.location.search));
+  const [heroState, setHeroState] = useState<HeroGenerationState>(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("hero") === "ready") return "ready";
+    return params.get("hero") === "generating" || resolveStudioStep(window.location.search) === "layout" ? "generating" : "ready";
+  });
+  const [heroProgress, setHeroProgress] = useState(() => heroState === "ready" ? 100 : 12);
   const [isUpdating, setIsUpdating] = useState(false);
   const initialized = useRef(false);
   const downloadHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -48,6 +54,13 @@ function StudioPrototype() {
   }, [flow]);
 
   useEffect(() => {
+    if (heroState !== "generating") return;
+    if (heroProgress >= 100) { setHeroState("ready"); return; }
+    const timeout = window.setTimeout(() => setHeroProgress((progress) => Math.min(100, progress + 16)), 850);
+    return () => window.clearTimeout(timeout);
+  }, [heroProgress, heroState]);
+
+  useEffect(() => {
     document.documentElement.dir = project.direction;
     document.documentElement.lang = project.direction === "rtl" ? "ar" : "en";
   }, [project.direction]);
@@ -60,12 +73,17 @@ function StudioPrototype() {
     setFlow(next);
   };
   const steps = getStepsForFlow(flow);
+  const beginHeroGeneration = () => {
+    setHeroState("generating");
+    setHeroProgress(12);
+    navigateToFlow("layout");
+  };
 
-  const workspace = flow === "details" ? <BusinessDetailsWorkspace project={project} onChange={handleChange} onContinue={() => navigateToFlow("layout")} /> : flow === "layout" ? <LayoutChooserWorkspace project={project} onChange={handleChange} onBack={() => navigateToFlow("details")} onContinue={() => navigateToFlow("customize")} /> : flow === "customize" ? (
+  const workspace = flow === "details" ? <BusinessDetailsWorkspace project={project} onChange={handleChange} onContinue={beginHeroGeneration} /> : flow === "layout" ? <LayoutChooserWorkspace project={project} heroState={heroState} heroProgress={heroProgress} onChange={handleChange} onBack={() => navigateToFlow("details")} onContinue={() => navigateToFlow("customize")} /> : flow === "customize" ? (
     <>
       <div className="refine-workspace">
         <CustomizationPanel project={project} onChange={handleChange} onLayout={() => navigateToFlow("layout")} />
-        <WebsitePreview project={project} isUpdating={isUpdating} />
+        <WebsitePreview project={project} isUpdating={isUpdating} heroState={heroState} heroProgress={heroProgress} />
       </div>
       <StudioActionBar onBack={() => navigateToFlow("layout")} onReview={() => navigateToFlow("review")} />
     </>
