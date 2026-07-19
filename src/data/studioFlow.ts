@@ -9,6 +9,8 @@ const STEP_DEFINITIONS: Array<Pick<StudioStep, "id" | "label">> = [
 ];
 
 const FLOW_INDEX: Record<StudioFlowState, number> = {
+  details: 0,
+  layout: 1,
   customize: 2,
   review: 3,
   building: 3,

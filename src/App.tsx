@@ -11,6 +11,7 @@ import { StudioHeader } from "./components/StudioHeader";
 import { WebsitePreview } from "./components/WebsitePreview";
 import { defaultProject } from "./data/sampleProjects";
 import { getStepsForFlow } from "./data/studioFlow";
+import { resolveAppRoute, resolveStudioStep } from "./routing";
 import type { StudioFlowState, StudioProjectSample } from "./types/studio";
 
 function StudioPrototype() {
@@ -25,7 +26,7 @@ function StudioPrototype() {
       direction: "rtl" as const,
     } : defaultProject;
   });
-  const [flow, setFlow] = useState<StudioFlowState>("customize");
+  const [flow, setFlow] = useState<StudioFlowState>(() => resolveStudioStep(window.location.search));
   const [isUpdating, setIsUpdating] = useState(false);
   const initialized = useRef(false);
   const downloadHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -49,7 +50,7 @@ function StudioPrototype() {
   const handleChange = (next: StudioProjectSample) => setProject(next);
   const steps = getStepsForFlow(flow);
 
-  const workspace = flow === "customize" ? (
+  const workspace = flow === "details" ? <h1>Business details</h1> : flow === "layout" ? <h1>Choose a layout</h1> : flow === "customize" ? (
     <>
       <div className="refine-workspace">
         <CustomizationPanel project={project} onChange={handleChange} />
@@ -90,5 +91,10 @@ function StudioPrototype() {
 }
 
 export default function App() {
-  return window.location.pathname === "/studio" ? <StudioPrototype /> : <MarketingHome />;
+  const route = resolveAppRoute(window.location.pathname);
+  if (route === "studio") return <StudioPrototype />;
+  if (route === "pricing") return <main><h1>One clear price. Your complete website.</h1></main>;
+  if (route === "signin") return <main><h1>Welcome back</h1></main>;
+  if (route === "projects") return <main><h1>Your websites</h1></main>;
+  return <MarketingHome />;
 }

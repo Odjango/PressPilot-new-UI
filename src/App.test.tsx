@@ -15,6 +15,15 @@ test("renders the public PressPilot homepage at the root route", () => {
   for (const link of studioLinks) expect(link).toHaveAttribute("href", "/studio");
 });
 
+test.each([
+  ["/pricing", "One clear price. Your complete website."],
+  ["/signin", "Welcome back"],
+  ["/projects", "Your websites"],
+])("renders the %s product page", (path, heading) => {
+  renderAt(path);
+  expect(screen.getByRole("heading", { name: heading })).toBeInTheDocument();
+});
+
 test("renders the approved Studio step", () => {
   const { container } = renderAt("/studio");
   expect(screen.getByRole("banner")).toBeInTheDocument();

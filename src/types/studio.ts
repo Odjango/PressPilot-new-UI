@@ -1,5 +1,5 @@
 export type TextDirection = "ltr" | "rtl";
-export type StudioFlowState = "customize" | "review" | "building" | "download";
+export type StudioFlowState = "details" | "layout" | "customize" | "review" | "building" | "download";
 
 export interface StudioStep {
   id: "details" | "layout" | "customize" | "review" | "download";
