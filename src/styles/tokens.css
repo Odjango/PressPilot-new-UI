@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+
+:root {
+  --canvas-deep: oklch(0.085 0.018 255);
+  --canvas: oklch(0.115 0.025 255);
+  --surface-quiet: oklch(0.145 0.024 255);
+  --surface: oklch(0.17 0.03 255);
+  --surface-raised: oklch(0.22 0.035 255);
+  --line: oklch(0.42 0.04 255 / 0.28);
+  --line-bright: oklch(0.65 0.05 230 / 0.32);
+  --text: oklch(0.96 0.006 165);
+  --muted: oklch(0.72 0.028 250);
+  --quiet: oklch(0.57 0.035 250);
+  --emerald: oklch(0.76 0.17 160);
+  --emerald-deep: oklch(0.58 0.15 160);
+  --cyan: oklch(0.78 0.14 205);
+  --warning: oklch(0.82 0.13 92);
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}

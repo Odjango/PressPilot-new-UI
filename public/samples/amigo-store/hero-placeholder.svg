@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Editorial menswear collection</title>
+  <desc id="desc">Abstract architectural styling set with neutral fabric forms</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b9b2a5"/><stop offset="1" stop-color="#6f6a61"/></linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#ded9ce"/><stop offset="1" stop-color="#8f8779"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-opacity=".25"/></filter>
+  </defs>
+  <rect width="900" height="1080" fill="url(#bg)"/>
+  <rect x="78" y="86" width="744" height="894" rx="4" fill="#c7c0b4" opacity=".36"/>
+  <path d="M0 760L900 410V1080H0Z" fill="#262521" opacity=".28"/>
+  <circle cx="716" cy="224" r="116" fill="#ded5c2" opacity=".5"/>
+  <path d="M218 318C256 222 377 177 480 233L608 304 568 486 632 887 287 909 325 515 174 466Z" fill="url(#cloth)" filter="url(#shadow)"/>
+  <path d="M322 291C360 338 469 343 516 274" fill="none" stroke="#565149" stroke-width="14" opacity=".6"/>
+  <path d="M344 495L550 468M329 557L564 528" stroke="#f2ede4" stroke-width="3" opacity=".35"/>
+  <rect x="580" y="708" width="176" height="207" fill="#34332f" opacity=".8"/>
+  <rect x="604" y="732" width="128" height="159" fill="#a79d8d"/>
+  <text x="98" y="1010" fill="#f2eee5" font-family="Arial,sans-serif" font-size="21" letter-spacing="6">AMIGO / COLLECTION 01</text>
+</svg>

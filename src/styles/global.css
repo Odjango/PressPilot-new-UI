@@ -1,0 +1,10 @@
+@import "./tokens.css";
+
+* { box-sizing: border-box; }
+html { color-scheme: dark; background: var(--canvas-deep); }
+body { margin: 0; min-width: 320px; min-height: 100vh; font-family: "Host Grotesk", Inter, system-ui, sans-serif; background: var(--canvas-deep); color: var(--text); -webkit-font-smoothing: antialiased; }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { color: inherit; }
+a { color: inherit; text-decoration: none; }
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
