@@ -13,7 +13,7 @@ export function MarketingHome() {
     <a className="skip-link" href="#homepage-content">Skip to homepage content</a>
     <AmbientBackground />
     <MarketingHeader />
-    <main id="homepage-content">
+    <main id="homepage-content" tabIndex={-1}>
       <HomeHero />
       <ProductDemoSection />
       <WebsiteExamples />

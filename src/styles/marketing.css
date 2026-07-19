@@ -1,4 +1,5 @@
 .marketing-shell { position: relative; min-height: 100vh; overflow: hidden; background: radial-gradient(circle at 65% 7%, oklch(0.26 0.08 170 / .1), transparent 29%), var(--canvas-deep); }
+.marketing-shell main:focus { outline: none; }
 .marketing-shell > main, .marketing-header, .marketing-footer { position: relative; z-index: 2; }
 .marketing-header { width: min(1440px, 100%); min-height: 76px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; gap: 46px; border-bottom: 1px solid var(--line); }
 .marketing-brand { display: inline-flex; align-items: center; gap: 11px; font-size: 14px; font-weight: 760; letter-spacing: -.02em; }
@@ -81,6 +82,7 @@
 }
 @media (max-width: 540px) {
   .home-hero { padding-top: 52px; }.marketing-kicker { width: auto; font-size: 9px; }.home-hero__actions { display: grid; gap: 12px; }.home-hero__actions .marketing-button { width: 100%; }.marketing-link { width: max-content; }
+  .demo-placeholder__body { grid-template-columns: 1fr; }.demo-placeholder__body > span { display: none; }.demo-placeholder__body > strong { min-height: 410px; padding: 24px; text-align: center; }
   .transformation-preview__topbar strong { display: none; }.transformation-canvas { min-height: 550px; padding: 12px; }.brief-card { width: 210px; left: 12px; top: 14px; }.transformation-rail { left: 32px; right: 25px; top: 226px; }.result-site { width: calc(100% - 24px); right: 12px; bottom: 49px; }.result-site__nav { padding-inline: 10px; }.result-site__nav span { display: none; }.result-site__hero { grid-template-columns: 1fr; min-height: 248px; }.result-site__hero > div:first-child { padding: 26px 18px; }.result-site__hero strong { font-size: 26px; }.clay-visual { display: none; }.transformation-proof { left: 12px; right: 12px; grid-template-columns: repeat(2,auto) 1fr; gap: 10px; }.transformation-proof span:nth-child(3) { display: none; }
   .process-grid, .included-grid { grid-template-columns: 1fr; }.process-grid li { border-right: 0; border-bottom: 1px solid var(--line) !important; min-height: 210px; }.process-grid li:last-child { border-bottom: 0 !important; }.process-grid h3 { margin-top: 42px; }
   .pricing-card { padding: 24px 20px; }.pricing-card strong { font-size: 59px; }.footer-cta h2 { font-size: 42px; }
