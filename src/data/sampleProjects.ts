@@ -25,7 +25,7 @@ export const defaultProject: StudioProjectSample = {
     { id: "layout", label: "Choose layout", status: "complete" },
     { id: "customize", label: "Customize", status: "current" },
     { id: "review", label: "Review", status: "upcoming" },
-    { id: "download", label: "Download", status: "upcoming" },
+    { id: "download", label: "Download & install", status: "upcoming" },
   ],
   layout: { id: "split", name: "Split Hero", description: "Editorial copy and imagery side by side" },
   typography: typographyOptions[0],

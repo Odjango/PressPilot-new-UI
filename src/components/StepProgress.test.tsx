@@ -4,7 +4,7 @@ import { StepProgress } from "./StepProgress";
 
 test("announces the current Studio step and all five labels", () => {
   render(<StepProgress steps={defaultProject.steps} />);
-  for (const label of ["Business details", "Choose layout", "Customize", "Review", "Download"]) {
+  for (const label of ["Business details", "Choose layout", "Customize", "Review", "Download & install"]) {
     expect(screen.getByText(label)).toBeInTheDocument();
   }
   expect(screen.getByText("Step 3 of 5 — Customize")).toBeInTheDocument();
