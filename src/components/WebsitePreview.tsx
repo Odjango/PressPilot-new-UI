@@ -1,7 +1,7 @@
 import { ExternalLink, Maximize2, Monitor, Smartphone } from "lucide-react";
 import type { StudioProjectSample } from "../types/studio";
 
-export function WebsitePreview({ project, isUpdating }: { project: StudioProjectSample; isUpdating: boolean }) {
+export function WebsitePreview({ project, isUpdating, compactMetadata = false }: { project: StudioProjectSample; isUpdating: boolean; compactMetadata?: boolean }) {
   const style = { "--preview-accent": project.palette.swatches[2], "--preview-ink": project.palette.swatches[1], fontFamily: project.typography.family } as React.CSSProperties;
   return (
     <section className="website-preview" aria-label="Website preview">
@@ -37,12 +37,12 @@ export function WebsitePreview({ project, isUpdating }: { project: StudioProject
         </div>
       </div>
 
-      <div className="preview-metadata" aria-label="Current preview settings">
+      {!compactMetadata && <div className="preview-metadata" aria-label="Current preview settings">
         <div><span>Layout</span><strong>{project.layout.name}</strong></div>
         <div><span>Typography</span><strong>{project.typography.name}</strong></div>
         <div><span>Palette</span><strong>{project.palette.name}</strong></div>
         <div className="preview-metadata__status"><span className="status-dot" /> <strong>{isUpdating ? "Updating preview…" : "Preview synced"}</strong></div>
-      </div>
+      </div>}
       <div className="sr-only" aria-live="polite">{isUpdating ? "Updating preview…" : "Preview updated"}</div>
     </section>
   );
