@@ -3,9 +3,10 @@ import { vi } from "vitest";
 import App from "./App";
 
 test("renders the approved Studio step", () => {
-  render(<App />);
+  const { container } = render(<App />);
   expect(screen.getByRole("banner")).toBeInTheDocument();
   expect(screen.getByLabelText("Ambient background")).toHaveAttribute("aria-hidden", "true");
+  expect(container.querySelector(".ambient__star")).not.toBeInTheDocument();
   expect(screen.getByRole("heading", { name: /customize the website/i })).toBeInTheDocument();
   expect(screen.getAllByText(/step 3 of 5/i)).not.toHaveLength(0);
   expect(screen.getByRole("region", { name: "Website preview" })).toBeInTheDocument();

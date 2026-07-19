@@ -4,7 +4,6 @@
 .ambient__plane { position: absolute; display: block; border: 1px solid oklch(0.7 0.1 190 / .08); background: linear-gradient(135deg, oklch(0.38 0.12 178 / .08), transparent 60%); transform: rotate(-18deg); }
 .ambient__plane--one { width: 48vw; height: 28vw; right: -16vw; top: 22%; }
 .ambient__plane--two { width: 38vw; height: 22vw; left: -22vw; bottom: -5%; transform: rotate(13deg); }
-.ambient__star { position: absolute; width: 72px; height: 72px; right: 8%; top: 17%; opacity: .34; filter: blur(.1px); background: linear-gradient(transparent 48%, oklch(0.86 0.13 170) 49%, oklch(0.86 0.13 170) 51%, transparent 52%), linear-gradient(90deg, transparent 48%, oklch(0.86 0.13 170) 49%, oklch(0.86 0.13 170) 51%, transparent 52%); transform: rotate(45deg); }
 .ambient__mask { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0 65%, var(--canvas-deep) 96%); }
 .app-header { height: 68px; padding: 0 max(28px, calc((100vw - 1440px) / 2)); border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 42px; position: relative; z-index: 4; background: oklch(0.09 0.02 255 / .76); backdrop-filter: blur(18px); }
 .brand { display: flex; gap: 11px; align-items: center; font-weight: 750; letter-spacing: -.02em; }
