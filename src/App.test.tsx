@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { vi } from "vitest";
 import App from "./App";
 
 test("renders the approved Studio step", () => {
@@ -10,4 +11,28 @@ test("renders the approved Studio step", () => {
   expect(screen.getByRole("region", { name: "Website preview" })).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Review website" })).toBeInTheDocument();
   expect(screen.getByRole("button", { name: "Back to layout" })).toBeInTheDocument();
+});
+
+test("moves from Step 3 through inline creation to a visibly active Step 5", async () => {
+  vi.useFakeTimers();
+  render(<App />);
+
+  expect(screen.getByText("Customize").closest("li")).toHaveAttribute("aria-current", "step");
+  fireEvent.click(screen.getByRole("button", { name: "Review website" }));
+  expect(screen.getByRole("heading", { name: "Review the website" })).toBeInTheDocument();
+  expect(screen.getByText("Review").closest("li")).toHaveAttribute("aria-current", "step");
+
+  fireEvent.click(screen.getByRole("button", { name: "Create website" }));
+  expect(screen.getByRole("heading", { name: "Creating your website" })).toBeInTheDocument();
+  expect(screen.getByText("Step 4 · Creating website")).toBeInTheDocument();
+  expect(screen.getByText("Review").closest("li")).toHaveAttribute("aria-current", "step");
+
+  await act(async () => vi.advanceTimersByTime(2600));
+  expect(screen.getByRole("heading", { name: "Your website is ready" })).toBeInTheDocument();
+  expect(screen.getByText("Download & install").closest("li")).toHaveAttribute("aria-current", "step");
+  expect(screen.getAllByText("Complete")).toHaveLength(4);
+
+  fireEvent.click(screen.getByRole("button", { name: "Back to review" }));
+  expect(screen.getByRole("heading", { name: "Review the website" })).toBeInTheDocument();
+  vi.useRealTimers();
 });
