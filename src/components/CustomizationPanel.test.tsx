@@ -7,7 +7,7 @@ import type { StudioProjectSample } from "../types/studio";
 
 function StatefulPanel() {
   const [project, setProject] = useState<StudioProjectSample>(defaultProject);
-  return <CustomizationPanel project={project} onChange={setProject} />;
+  return <CustomizationPanel project={project} onChange={setProject} onLayout={() => undefined} />;
 }
 
 test("provides accessible customization controls", async () => {

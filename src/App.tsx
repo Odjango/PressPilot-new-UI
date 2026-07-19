@@ -53,30 +53,36 @@ function StudioPrototype() {
   }, [project.direction]);
 
   const handleChange = (next: StudioProjectSample) => setProject(next);
+  const navigateToFlow = (next: StudioFlowState) => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("step", next);
+    window.history.pushState({}, "", `${window.location.pathname}?${params.toString()}`);
+    setFlow(next);
+  };
   const steps = getStepsForFlow(flow);
 
-  const workspace = flow === "details" ? <BusinessDetailsWorkspace project={project} onChange={handleChange} onContinue={() => setFlow("layout")} /> : flow === "layout" ? <LayoutChooserWorkspace project={project} onChange={handleChange} onBack={() => setFlow("details")} onContinue={() => setFlow("customize")} /> : flow === "customize" ? (
+  const workspace = flow === "details" ? <BusinessDetailsWorkspace project={project} onChange={handleChange} onContinue={() => navigateToFlow("layout")} /> : flow === "layout" ? <LayoutChooserWorkspace project={project} onChange={handleChange} onBack={() => navigateToFlow("details")} onContinue={() => navigateToFlow("customize")} /> : flow === "customize" ? (
     <>
       <div className="refine-workspace">
-        <CustomizationPanel project={project} onChange={handleChange} />
+        <CustomizationPanel project={project} onChange={handleChange} onLayout={() => navigateToFlow("layout")} />
         <WebsitePreview project={project} isUpdating={isUpdating} />
       </div>
-      <StudioActionBar onReview={() => setFlow("review")} />
+      <StudioActionBar onBack={() => navigateToFlow("layout")} onReview={() => navigateToFlow("review")} />
     </>
   ) : flow === "review" || flow === "building" ? (
     <ReviewWorkspace
       project={project}
-      onCreate={() => setFlow("building")}
-      onBack={() => setFlow("customize")}
-      onEdit={() => setFlow("customize")}
+      onCreate={() => navigateToFlow("building")}
+      onBack={() => navigateToFlow("customize")}
+      onEdit={() => navigateToFlow("customize")}
       building={flow === "building"}
-      onBuildComplete={() => setFlow("download")}
+      onBuildComplete={() => navigateToFlow("download")}
     />
   ) : (
     <DownloadWorkspace
       project={project}
-      onBack={() => setFlow("review")}
-      onRestart={() => setFlow("customize")}
+      onBack={() => navigateToFlow("review")}
+      onRestart={() => navigateToFlow("layout")}
       headingRef={downloadHeadingRef}
     />
   );

@@ -5,9 +5,10 @@ import type { StudioProjectSample } from "../types/studio";
 interface Props {
   project: StudioProjectSample;
   onChange: (project: StudioProjectSample) => void;
+  onLayout: () => void;
 }
 
-export function CustomizationPanel({ project, onChange }: Props) {
+export function CustomizationPanel({ project, onChange, onLayout }: Props) {
   return (
     <aside className="customization-panel" aria-label="Website customization controls">
       <div className="panel-heading">
@@ -19,7 +20,7 @@ export function CustomizationPanel({ project, onChange }: Props) {
       <section className="selected-layout">
         <span className="selected-layout__icon"><LayoutTemplate size={20} /></span>
         <span><small>Selected layout</small><strong>{project.layout.name}</strong></span>
-        <button type="button">Change layout <ChevronRight size={15} /></button>
+        <button type="button" onClick={onLayout}>Change layout <ChevronRight size={15} /></button>
       </section>
 
       <fieldset className="control-group">

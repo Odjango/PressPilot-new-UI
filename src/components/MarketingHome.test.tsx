@@ -30,5 +30,5 @@ test("shows a real transformation preview and four complete website examples", (
   }
 
   const pricing = screen.getByRole("heading", { name: "One website. One clear price." }).closest("section")!;
-  expect(within(pricing).getByRole("link", { name: "Start in Studio" })).toHaveAttribute("href", "/studio");
+  expect(within(pricing).getByRole("link", { name: "Start in Studio" })).toHaveAttribute("href", "/studio?step=details");
 });

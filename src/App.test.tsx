@@ -12,7 +12,7 @@ test("renders the public PressPilot homepage at the root route", () => {
   expect(screen.getByRole("heading", { name: "Your business, turned into a complete WordPress website." })).toBeInTheDocument();
   const studioLinks = screen.getAllByRole("link", { name: "Start in Studio" });
   expect(studioLinks.length).toBeGreaterThan(1);
-  for (const link of studioLinks) expect(link).toHaveAttribute("href", "/studio");
+  for (const link of studioLinks) expect(link).toHaveAttribute("href", "/studio?step=details");
 });
 
 test.each([
