@@ -4,11 +4,11 @@ import { mkdir } from "node:fs/promises";
 const outputDirectory = "artifacts/screenshots";
 
 const captures = [
-  { name: "desktop", width: 1440, height: 1100, url: "/studio" },
-  { name: "laptop", width: 1280, height: 900, url: "/studio" },
-  { name: "tablet", width: 834, height: 1112, url: "/studio" },
-  { name: "mobile", width: 390, height: 844, url: "/studio" },
-  { name: "rtl", width: 1440, height: 1100, url: "/studio?dir=rtl" },
+  { name: "desktop", width: 1440, height: 1100, url: "/studio?step=customize" },
+  { name: "laptop", width: 1280, height: 900, url: "/studio?step=customize" },
+  { name: "tablet", width: 834, height: 1112, url: "/studio?step=customize" },
+  { name: "mobile", width: 390, height: 844, url: "/studio?step=customize" },
+  { name: "rtl", width: 1440, height: 1100, url: "/studio?step=customize&dir=rtl" },
 ] as const;
 
 test.beforeAll(async () => mkdir(outputDirectory, { recursive: true }));

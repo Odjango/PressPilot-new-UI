@@ -6,6 +6,7 @@
 .marketing-brand .brand__mark { width: 32px; }
 .marketing-nav { display: flex; align-items: center; gap: 30px; }
 .marketing-nav a, .marketing-signin { min-height: 44px; display: inline-flex; align-items: center; color: var(--muted); font-size: 13px; font-weight: 520; transition: color .18s var(--ease-out); }
+.marketing-nav__mobile { display: none !important; }
 .marketing-nav a:hover, .marketing-signin:hover { color: var(--text); }
 .marketing-header__actions { margin-inline-start: auto; display: flex; align-items: center; gap: 20px; }
 .marketing-menu { display: none; margin-inline-start: auto; width: 44px; height: 44px; place-items: center; border: 1px solid var(--line-bright); border-radius: 10px; background: var(--surface-quiet); }
@@ -72,6 +73,7 @@
 }
 @media (max-width: 800px) {
   .marketing-header { min-height: 66px; padding-inline: 20px; }.marketing-header__actions { display: none; }
+  .marketing-header { position: relative; z-index: 20; }.marketing-nav.is-open { position: absolute; inset-inline: 20px; top: 65px; display: grid; gap: 2px; padding: 14px; border: 1px solid var(--line-bright); border-radius: 13px; background: oklch(0.12 0.025 255 / .98); box-shadow: 0 24px 65px #0009; backdrop-filter: blur(18px); }.marketing-nav.is-open a { min-height: 47px; padding: 0 12px; border-radius: 8px; }.marketing-nav.is-open a:hover { background: var(--surface-raised); }.marketing-nav__mobile { display: inline-flex !important; }.marketing-nav__mobile--primary { margin-top: 5px; justify-content: space-between; background: var(--emerald); color: var(--canvas-deep) !important; font-weight: 740 !important; }
   .home-hero { min-height: 0; padding: 68px 20px 88px; gap: 58px; }.home-hero h1 { font-size: clamp(47px, 13vw, 68px); }.home-hero__lead { font-size: 15px; }.home-hero__actions { flex-wrap: wrap; }
   .transformation-canvas { min-height: 610px; padding: 18px; }.brief-card { left: 18px; top: 20px; }.transformation-rail { left: 52px; right: 42px; top: 231px; }.result-site { width: calc(100% - 36px); right: 18px; bottom: 53px; }.transformation-proof { left: 18px; right: 18px; }
   .marketing-section, .product-demo { width: calc(100% - 40px); padding: 88px 0; }.marketing-section__intro { margin-bottom: 32px; }.marketing-section__intro h2, .pricing-copy h2 { font-size: clamp(38px, 10vw, 52px); }
