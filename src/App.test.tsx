@@ -10,7 +10,9 @@ function renderAt(path: string) {
 test("renders the public PressPilot homepage at the root route", () => {
   renderAt("/");
   expect(screen.getByRole("heading", { name: "Your business, turned into a complete WordPress website." })).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Start in Studio" })).toHaveAttribute("href", "/studio");
+  const studioLinks = screen.getAllByRole("link", { name: "Start in Studio" });
+  expect(studioLinks.length).toBeGreaterThan(1);
+  for (const link of studioLinks) expect(link).toHaveAttribute("href", "/studio");
 });
 
 test("renders the approved Studio step", () => {
