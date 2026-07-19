@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "kitVersion": "2026-07-19.1",
+  "purpose": "Implement the approved PressPilot redesign in the production application without replacing production mechanics.",
+  "source": {
+    "repository": "https://github.com/Odjango/PressPilot-new-UI",
+    "branch": "agent/studio-refine-prototype",
+    "prototypeCommitBeforeKit": "5b9f25a",
+    "productionRepositoryTouched": false
+  },
+  "requiredReading": [
+    "00-START-HERE.md",
+    "01-MASTER-CODING-AGENT-PROMPT.md",
+    "02-PRODUCTION-MIGRATION-PLAN.md",
+    "03-SOURCE-AND-VISUAL-MANIFEST.md",
+    "04-PRODUCTION-INTEGRATION-CONTRACTS.md",
+    "05-VISUAL-COPY-ACCESSIBILITY-SPEC.md",
+    "06-TEST-PLAN.md",
+    "07-RELEASE-ROLLBACK-PLAN.md",
+    "08-FINAL-EXECUTION-CHECKLIST.md",
+    "09-ARCHIVE-CONTENTS.md",
+    "10-APPROVED-PRICING-COPY.md"
+  ],
+  "routes": [
+    { "prototype": "/", "productionIntent": "homepage" },
+    { "prototype": "/pricing", "productionIntent": "pricing" },
+    { "prototype": "/signin", "productionIntent": "existing production sign-in route" },
+    { "prototype": "/projects", "productionIntent": "existing production projects route" },
+    { "prototype": "/studio?step=details", "productionIntent": "Studio Step 1: Business details" },
+    { "prototype": "/studio?step=layout", "productionIntent": "Studio Step 2: Homepage direction" },
+    { "prototype": "/studio?step=customize", "productionIntent": "Studio Step 3: Customize" },
+    { "prototype": "/studio?step=review", "productionIntent": "Studio Step 4: Review and generate" },
+    { "prototype": "/studio?step=building", "productionIntent": "internal building substate of Step 4" },
+    { "prototype": "/studio?step=download", "productionIntent": "Studio Step 5: Download and install" }
+  ],
+  "studioVisualSteps": [
+    { "number": 1, "id": "details", "label": "Business details" },
+    { "number": 2, "id": "layout", "label": "Choose layout" },
+    { "number": 3, "id": "customize", "label": "Customize" },
+    { "number": 4, "id": "review", "label": "Review", "internalStates": ["review", "queued", "building", "failed"] },
+    { "number": 5, "id": "download", "label": "Download & install" }
+  ],
+  "hardBoundaries": [
+    "Do not replace production authentication, project persistence, uploads, checkout, credits, hero generation, gallery, website generation, or downloads with prototype mechanics.",
+    "Hero generation starts only after valid Step 1 continuation and is first presented on Step 2.",
+    "Show the existing PressPilot background and real progress until the generated hero replaces it.",
+    "Keep current gallery preview mechanics and integrate them into the approved Step 3 presentation.",
+    "Building remains inside visual Step 4; Step 5 activates only when a real artifact is ready.",
+    "Only Single Site is purchasable at launch; Freelancer, Agency, and Studio capture waitlist email.",
+    "Do not restore the removed green X mark.",
+    "Do not delete the old production UI until approved after a stable flagged rollout."
+  ],
+  "sourceGroups": {
+    "copyOrAdapt": [
+      "src/styles/tokens.css",
+      "src/styles/global.css",
+      "src/styles/marketing.css",
+      "src/styles/pages.css",
+      "src/styles/studio.css",
+      "src/components/marketing/",
+      "src/components/marketing/MarketingHeader.tsx",
+      "src/components/marketing/MarketingFooter.tsx",
+      "src/components/StudioHeader.tsx",
+      "src/components/ProjectHeader.tsx",
+      "src/components/StepProgress.tsx",
+      "src/components/BusinessDetailsWorkspace.tsx",
+      "src/components/LayoutChooserWorkspace.tsx",
+      "src/components/CustomizationPanel.tsx",
+      "src/components/WebsitePreview.tsx",
+      "src/components/StudioActionBar.tsx",
+      "src/components/ReviewWorkspace.tsx",
+      "src/components/ReviewSummary.tsx",
+      "src/components/BuildLedger.tsx",
+      "src/components/DownloadWorkspace.tsx",
+      "src/components/DownloadPackageCard.tsx",
+      "src/components/InstallGuide.tsx"
+    ],
+    "integrateNotCopy": [
+      "src/App.tsx local state and timers",
+      "src/routing.ts prototype routes",
+      "src/data/sampleProjects.ts",
+      "prototype waitlist submission",
+      "prototype pricing links",
+      "prototype download button behavior",
+      "prototype preview/gallery samples"
+    ],
+    "referenceTests": [
+      "src/**/*.test.ts",
+      "src/**/*.test.tsx",
+      "tests/complete-pages.spec.ts",
+      "tests/complete-pages-visual.spec.ts",
+      "tests/marketing-home.spec.ts"
+    ]
+  },
+  "pricingLaunchState": {
+    "live": { "tier": "Single Site", "credits": 1, "priceDisplay": "$29.99", "action": "Get 1 credit" },
+    "waitlist": ["Freelancer", "Agency", "Studio"],
+    "reassurance": "Secure checkout · Refund policy"
+  },
+  "prototypeVerificationBaseline": {
+    "unitAndComponentTests": 41,
+    "playwrightChecks": 51,
+    "productionBuild": "passed",
+    "note": "Prototype evidence only; production repository must run its own complete gates."
+  },
+  "archive": "artifacts/presspilot-production-ui-migration-kit-2026-07-19.tar.gz"
+}
