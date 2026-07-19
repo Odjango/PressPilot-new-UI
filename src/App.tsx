@@ -3,6 +3,9 @@ import { AmbientBackground } from "./components/AmbientBackground";
 import { CustomizationPanel } from "./components/CustomizationPanel";
 import { DownloadWorkspace } from "./components/DownloadWorkspace";
 import { MarketingHome } from "./components/MarketingHome";
+import { PricingPage } from "./components/PricingPage";
+import { ProjectsPage } from "./components/ProjectsPage";
+import { SignInPage } from "./components/SignInPage";
 import { ProjectHeader } from "./components/ProjectHeader";
 import { ReviewWorkspace } from "./components/ReviewWorkspace";
 import { StepProgress } from "./components/StepProgress";
@@ -93,8 +96,8 @@ function StudioPrototype() {
 export default function App() {
   const route = resolveAppRoute(window.location.pathname);
   if (route === "studio") return <StudioPrototype />;
-  if (route === "pricing") return <main><h1>One clear price. Your complete website.</h1></main>;
-  if (route === "signin") return <main><h1>Welcome back</h1></main>;
-  if (route === "projects") return <main><h1>Your websites</h1></main>;
+  if (route === "pricing") return <PricingPage />;
+  if (route === "signin") return <SignInPage />;
+  if (route === "projects") return <ProjectsPage />;
   return <MarketingHome />;
 }

@@ -1,0 +1,32 @@
+export const dashboardProjects = [
+  {
+    id: "9de98e21",
+    name: "Amigo Store",
+    category: "E-commerce · English",
+    status: "In progress",
+    progress: "Step 3 of 5",
+    action: "Continue in Studio",
+    href: "/studio?step=customize",
+    asset: "/samples/homepage/shop-preview.svg",
+  },
+  {
+    id: "f194870a",
+    name: "AMIGD Studio",
+    category: "Creative studio · English",
+    status: "Ready to review",
+    progress: "Step 4 of 5",
+    action: "Review website",
+    href: "/studio?step=review",
+    asset: "/samples/homepage/consulting-preview.svg",
+  },
+  {
+    id: "73ca611b",
+    name: "Sora House",
+    category: "Wellness · Arabic RTL",
+    status: "Website ready",
+    progress: "Step 5 of 5",
+    action: "Download website",
+    href: "/studio?step=download",
+    asset: "/samples/homepage/wellness-preview.svg",
+  },
+] as const;
