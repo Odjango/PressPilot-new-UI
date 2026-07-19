@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#dde6e6"/><rect x="26" y="24" width="748" height="472" rx="5" fill="#f5f7f4"/>
+  <rect x="26" y="24" width="748" height="62" fill="#102a34"/><text x="58" y="62" font-family="Arial" font-size="17" font-weight="700" fill="#f5f7f4">NORTHLINE</text><text x="592" y="61" font-family="Arial" font-size="9" letter-spacing="2" fill="#b9d3d1">WORK  INSIGHT  CONTACT</text>
+  <rect x="58" y="119" width="684" height="324" fill="#dce6e3"/><path d="M492 119h250v324H365z" fill="#9db8b4"/><path d="M534 119h208v324H453z" fill="#567d7b" opacity=".8"/>
+  <text x="89" y="162" font-family="Arial" font-size="10" letter-spacing="3" fill="#3a6e6b">ADVISORY FOR THE NEXT MOVE</text><text x="89" y="225" font-family="Arial" font-size="48" font-weight="700" fill="#102a34">Clear decisions.</text><text x="89" y="277" font-family="Arial" font-size="48" font-weight="700" fill="#102a34">Practical growth.</text>
+  <text x="89" y="321" font-family="Arial" font-size="13" fill="#486267">Strategy and operations support for teams</text><text x="89" y="342" font-family="Arial" font-size="13" fill="#486267">building durable businesses.</text><rect x="89" y="373" width="135" height="40" fill="#14b89a"/><text x="112" y="398" font-family="Arial" font-size="9" font-weight="700" fill="#092f2a">START A CONVERSATION</text>
+</svg>

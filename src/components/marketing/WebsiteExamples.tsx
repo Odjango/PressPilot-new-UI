@@ -10,7 +10,7 @@ export function WebsiteExamples() {
       </div>
       <div className="example-grid">
         {websiteExamples.map((example) => <article className="example-card" key={example.name}>
-          <div className="example-card__placeholder"><span>{example.name}</span></div>
+          <div className="example-card__visual"><img src={example.asset} alt={`${example.name} website preview`} /></div>
           <div className="example-card__meta"><div><span>{example.category}</span><h3>{example.name}</h3></div><a href="#preview" aria-label={`Open ${example.name} preview`}><ArrowUpRight size={16} /></a></div>
           <p>{example.language}<i />{example.style}</p>
         </article>)}

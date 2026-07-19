@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <rect width="800" height="520" fill="#dce2d6"/><rect x="26" y="24" width="748" height="472" rx="5" fill="#f2f1e8"/>
+  <text x="58" y="63" font-family="Georgia" font-size="22" fill="#314437">Sora House</text><text x="604" y="62" font-family="Arial" font-size="9" letter-spacing="2" fill="#657867">STAY  REST  VISIT</text>
+  <rect x="58" y="94" width="684" height="350" fill="#899b82"/><circle cx="579" cy="232" r="128" fill="#c6c9aa"/><path d="M58 374c120-118 212-136 322-69 106 65 202 43 362-69v208H58z" fill="#536b5c"/><path d="M58 410c143-73 267-71 378-8 97 55 190 34 306-35v77H58z" fill="#354c40"/>
+  <rect x="87" y="130" width="298" height="234" fill="#f2f1e8" opacity=".94"/><text x="117" y="169" font-family="Arial" font-size="9" letter-spacing="3" fill="#788371">REST / RETURN</text><text x="117" y="224" font-family="Georgia" font-size="40" fill="#2e4035">Space to hear</text><text x="117" y="266" font-family="Georgia" font-size="40" fill="#2e4035">yourself again.</text><text x="117" y="304" font-family="Arial" font-size="12" fill="#6e7a70">A quiet hillside retreat shaped</text><text x="117" y="323" font-family="Arial" font-size="12" fill="#6e7a70">around rest, food, and landscape.</text>
+</svg>
