@@ -44,3 +44,40 @@ test("Arabic mode applies RTL direction to the complete Studio surface", async (
   expect(controls!.x).toBeGreaterThan(preview!.x);
   await expect(page.locator(".action-bar .primary-action svg")).toHaveCSS("transform", /matrix\(-1|none/);
 });
+
+test("keyboard, focus, selection, and live updates meet the Studio quality gate", async ({ page }) => {
+  await page.setViewportSize(viewports.desktop);
+  await page.goto("/");
+
+  await page.keyboard.press("Tab");
+  const skipLink = page.getByRole("link", { name: "Skip to Studio workspace" });
+  await expect(skipLink).toBeFocused();
+  const focusStyle = await skipLink.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { width: style.outlineWidth, style: style.outlineStyle };
+  });
+  expect(focusStyle.width).toBe("3px");
+  expect(focusStyle.style).not.toBe("none");
+
+  await skipLink.press("Enter");
+  await expect(page.locator("#studio-workspace")).toBeFocused();
+
+  await expect(page.getByRole("radio", { name: "Clean Sans" })).toBeChecked();
+  await expect(page.locator('[aria-live="polite"]')).toHaveCount(1);
+
+  for (const name of ["Change layout", "Back to layout", "Review website"]) {
+    const box = await page.getByRole("button", { name }).boundingBox();
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test("reduced motion removes ambient and preview transitions", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  const motion = await page.locator(".preview-stage").evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { animation: style.animationName, transition: style.transitionDuration };
+  });
+  expect(motion.animation).toBe("none");
+  expect(Number.parseFloat(motion.transition)).toBeLessThanOrEqual(0.00001);
+});

@@ -141,3 +141,5 @@
 .delivery-artifact__chrome strong { margin-inline-start: 6px; margin-left: 0; }
 [dir="rtl"] .lucide-arrow-left, [dir="rtl"] .lucide-arrow-right, [dir="rtl"] .lucide-chevron-right { transform: scaleX(-1); }
 [dir="rtl"] .sample-hero__content, [dir="rtl"] .review-summary, [dir="rtl"] .build-ledger, [dir="rtl"] .download-package-card__content { text-align: start; }
+.main-nav a, .account-control, .selected-layout button, .choice-grid label, .palette-list label, .action-bar button, .flow-action-bar button, .download-actions button { min-height: 44px; }
+.preview-toolbar button { min-width: 44px; height: 44px; }

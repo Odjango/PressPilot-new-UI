@@ -69,9 +69,10 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#studio-workspace">Skip to Studio workspace</a>
       <AmbientBackground />
       <StudioHeader />
-      <main className="studio-page">
+      <main className="studio-page" id="studio-workspace" tabIndex={-1}>
         <ProjectHeader project={project} />
         <StepProgress steps={steps} />
         {workspace}
