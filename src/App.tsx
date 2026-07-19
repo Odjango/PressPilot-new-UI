@@ -15,7 +15,14 @@ import type { StudioFlowState, StudioProjectSample } from "./types/studio";
 export default function App() {
   const [project, setProject] = useState(() => {
     const rtlRequested = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("dir") === "rtl";
-    return rtlRequested ? { ...defaultProject, language: "Arabic", direction: "rtl" as const } : defaultProject;
+    return rtlRequested ? {
+      ...defaultProject,
+      name: "متجر أميغو",
+      description: "وجهة منتقاة للأزياء الرجالية الخالدة، والعلامات المستقلة، وأناقة الحياة اليومية.",
+      headline: "أناقة تبقى معك.",
+      language: "Arabic",
+      direction: "rtl" as const,
+    } : defaultProject;
   });
   const [flow, setFlow] = useState<StudioFlowState>("customize");
   const [isUpdating, setIsUpdating] = useState(false);

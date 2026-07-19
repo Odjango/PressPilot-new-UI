@@ -26,6 +26,9 @@ for (const [name, viewport] of Object.entries(viewports)) {
 
     if (name === "mobile") {
       await expect(page.getByText("Step 3 of 5 — Customize")).toBeVisible();
+      const stage = await page.locator(".preview-stage").boundingBox();
+      const site = await page.locator(".site-frame").boundingBox();
+      expect(site!.width).toBeLessThanOrEqual(stage!.width + 1);
     }
     await expect(page.getByRole("button", { name: "Review website" })).toBeVisible();
     const hasOverflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
@@ -38,6 +41,8 @@ test("Arabic mode applies RTL direction to the complete Studio surface", async (
   await page.goto("/?dir=rtl");
   await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
   await expect(page.getByText("Arabic · RTL")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "أناقة تبقى معك." })).toBeVisible();
+  await expect(page.getByText("متجر أميغو", { exact: true }).first()).toBeVisible();
 
   const controls = await page.locator(".customization-panel").boundingBox();
   const preview = await page.locator(".website-preview").boundingBox();
