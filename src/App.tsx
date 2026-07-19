@@ -13,7 +13,10 @@ import { getStepsForFlow } from "./data/studioFlow";
 import type { StudioFlowState, StudioProjectSample } from "./types/studio";
 
 export default function App() {
-  const [project, setProject] = useState(defaultProject);
+  const [project, setProject] = useState(() => {
+    const rtlRequested = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("dir") === "rtl";
+    return rtlRequested ? { ...defaultProject, language: "Arabic", direction: "rtl" as const } : defaultProject;
+  });
   const [flow, setFlow] = useState<StudioFlowState>("customize");
   const [isUpdating, setIsUpdating] = useState(false);
   const initialized = useRef(false);
@@ -29,6 +32,11 @@ export default function App() {
   useEffect(() => {
     if (flow === "download") downloadHeadingRef.current?.focus();
   }, [flow]);
+
+  useEffect(() => {
+    document.documentElement.dir = project.direction;
+    document.documentElement.lang = project.direction === "rtl" ? "ar" : "en";
+  }, [project.direction]);
 
   const handleChange = (next: StudioProjectSample) => setProject(next);
   const steps = getStepsForFlow(flow);

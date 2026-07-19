@@ -131,3 +131,13 @@
 @media (max-width: 800px) { .main-nav { display:none; }.studio-page { padding-inline: 18px; }.project-actions { display:none; }.step-progress ol { display:none; }.step-progress__compact { display:block; color:var(--muted); font-size:12px; }.refine-workspace, .review-layout { grid-template-columns:1fr; }.website-preview { min-height: 590px; }.action-bar p, .flow-action-bar > p { display:none; }.action-bar, .flow-action-bar { grid-template-columns:1fr 1fr; }.preview-metadata { grid-template-columns:repeat(3,1fr); }.preview-metadata__status { display:none !important; } }
 @media (max-width: 700px) { .download-package-card { grid-template-columns: 1fr; }.delivery-artifact { min-height: 300px; }.download-package-card__content { min-height: 330px; }.install-guide ol { grid-template-columns: 1fr; }.download-actions { grid-template-columns: 1fr 1fr; }.download-actions > span { display: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior:auto !important; animation:none !important; transition-duration:.01ms !important; } }
+@media (max-width: 1099px) and (min-width: 801px) { .refine-workspace, .review-layout { grid-template-columns: 1fr; }.customization-panel { max-width: none; }.website-preview { min-height: 590px; }.project-header { align-items: center; }.review-layout .review-summary, .review-layout .build-ledger { min-height: 360px; } }
+.app-header { padding-inline: max(28px, calc((100vw - 1440px) / 2)); }
+.account-control { margin-inline-start: auto; margin-left: 0; }
+.status-lockup { padding-inline-end: 18px; padding-right: 0; border-inline-end: 1px solid var(--line); border-right: 0; }
+.swatches i { margin-inline-start: -4px; margin-left: 0; }.swatches i:first-child { margin-inline-start: 0; }
+.field-control small, .sample-caption, .delivery-artifact__seal { inset-inline-end: 11px; right: auto; }
+.sample-caption { inset-inline-end: 17px; }.delivery-artifact__seal { inset-inline-end: 13px; }
+.delivery-artifact__chrome strong { margin-inline-start: 6px; margin-left: 0; }
+[dir="rtl"] .lucide-arrow-left, [dir="rtl"] .lucide-arrow-right, [dir="rtl"] .lucide-chevron-right { transform: scaleX(-1); }
+[dir="rtl"] .sample-hero__content, [dir="rtl"] .review-summary, [dir="rtl"] .build-ledger, [dir="rtl"] .download-package-card__content { text-align: start; }
