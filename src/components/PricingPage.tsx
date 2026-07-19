@@ -1,4 +1,5 @@
-import { ArrowRight, Check } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Bell, Check, CheckCircle2, ShieldCheck } from "lucide-react";
 import { PublicPageShell } from "./PublicPageShell";
 
 const tiers = [
@@ -57,6 +58,9 @@ const faqs = [
 ] as const;
 
 export function PricingPage() {
+  const [openWaitlist, setOpenWaitlist] = useState<string | null>(null);
+  const [joinedWaitlists, setJoinedWaitlists] = useState<string[]>([]);
+
   return <PublicPageShell mainId="pricing-content" skipLabel="Skip to pricing" footerCta={{ eyebrow: "One brief. One complete website.", heading: "Ready to build your first website?", copy: "From a short brief to an install-ready WordPress website in minutes." }}>
     <section className="page-hero page-hero--pricing">
       <p className="page-eyebrow">Website credits · One-time purchase</p>
@@ -75,15 +79,27 @@ export function PricingPage() {
         <div className="pricing-tier-card__price"><strong>{tier.price}</strong><span>one-time</span></div>
         <p className="pricing-tier-card__credits">{tier.creditLine}</p>
         <ul>{tier.features.map((feature) => <li key={feature}><Check size={15} /> <span>{feature}</span></li>)}</ul>
-        {tier.available
-          ? <a className="marketing-button pricing-tier-card__action" href="/studio?step=details">{tier.action} <ArrowRight size={16} /></a>
-          : <button className="pricing-tier-card__action" type="button" disabled>{tier.action}</button>}
+        {tier.available ? <>
+          <a className="marketing-button pricing-tier-card__action" href="/studio?step=details">{tier.action} <ArrowRight size={16} /></a>
+          <p className="pricing-tier-card__reassurance"><ShieldCheck size={13} /> Secure checkout <span>·</span> <a href="#refund-policy">Refund policy</a></p>
+        </> : joinedWaitlists.includes(tier.name) ? <div className="pricing-waitlist-success" role="status">
+          <CheckCircle2 size={18} /><span><strong>You’re on the {tier.name} waitlist.</strong><small>We’ll email you when this credit pack is ready.</small></span>
+        </div> : openWaitlist === tier.name ? <form className="pricing-waitlist" onSubmit={(event) => {
+          event.preventDefault();
+          setJoinedWaitlists((current) => [...current, tier.name]);
+          setOpenWaitlist(null);
+        }}>
+          <label htmlFor={`waitlist-${tier.name}`}>Email for {tier.name} updates</label>
+          <input id={`waitlist-${tier.name}`} name="email" type="email" autoComplete="email" placeholder="you@company.com" autoFocus required />
+          <button className="pricing-waitlist__submit" type="submit" aria-label={`Join ${tier.name} waitlist`}>Join waitlist <ArrowRight size={14} /></button>
+          <div><small>Pack updates only. No spam.</small><button type="button" onClick={() => setOpenWaitlist(null)}>Not now</button></div>
+        </form> : <button className="pricing-tier-card__action pricing-tier-card__notify" type="button" aria-label={`Notify me about ${tier.name}`} onClick={() => setOpenWaitlist(tier.name)}><Bell size={14} /> Notify me</button>}
       </article>)}
     </section>
 
     <section className="pricing-faq page-section">
       <div className="page-section__intro"><span>Questions, answered</span><h2>Know exactly what you’re buying.</h2><p>No subscriptions, expiring credits, or proprietary lock-in.</p></div>
-      <div className="faq-grid">{faqs.map(([question, answer], index) => <details open={index === 0} key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div>
+      <div className="faq-grid">{faqs.map(([question, answer], index) => <details id={question === "Do you offer refunds?" ? "refund-policy" : undefined} open={index === 0} key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div>
     </section>
 
   </PublicPageShell>;

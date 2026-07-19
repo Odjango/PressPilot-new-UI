@@ -1,6 +1,6 @@
 # PressPilot Complete UI — Coding Agent Handoff
 
-**Version:** 1.1
+**Version:** 1.2
 **Date:** 2026-07-19  
 **Prototype repository:** `Odjango/PressPilot-new-UI`  
 **Prototype branch:** `agent/studio-refine-prototype`
@@ -33,7 +33,7 @@ PressPilot prepares:
 
 The buyer can install the website on a compatible WordPress host, edit it with WordPress Full Site Editing, and own the delivered website.
 
-Commercial model: **one credit builds one complete website · credits never expire · no subscription**. At launch, only **Single Site — $29.99 for one credit** is purchasable. Freelancer, Agency, and Studio packs are visible but disabled as Coming soon.
+Commercial model: **one credit builds one complete website · credits never expire · no subscription**. At launch, only **Single Site — $29.99 for one credit** is purchasable. Freelancer, Agency, and Studio remain Coming soon and collect tier-specific waitlist interest through `Notify me`.
 
 ## 3. Terminology
 
@@ -66,7 +66,7 @@ The word `theme` may remain only where WordPress technical internals require it,
 | URL | Component | Visual capture |
 | --- | --- | --- |
 | `/` | `MarketingHome` | `artifacts/screenshots/presspilot-home-desktop.png` |
-| `/pricing` | `PricingPage` | `artifacts/screenshots/app-pricing-desktop.png`, `app-pricing-mobile.png` |
+| `/pricing` | `PricingPage` | `artifacts/screenshots/app-pricing-desktop.png`, `app-pricing-mobile.png`, `app-pricing-waitlist.png` |
 | `/signin` | `SignInPage` | `artifacts/screenshots/app-signin-desktop.png` |
 | `/projects` | `ProjectsPage` | `artifacts/screenshots/app-projects-desktop.png` |
 | `/studio?step=details` | `BusinessDetailsWorkspace` | `artifacts/screenshots/studio-step-1-business-details.png` |
@@ -186,7 +186,7 @@ The prototype uses local state and sample data. Connect these seams to productio
 | Sign in | Production authentication and password recovery |
 | Projects page | Production project query, statuses, and permissions |
 | Single Site “Get 1 credit” | Production one-credit checkout and entitlement flow |
-| Freelancer, Agency, Studio actions | Keep disabled and visibly Coming soon for launch; do not attach checkout handlers |
+| Freelancer, Agency, Studio `Notify me` | Production waitlist endpoint; submit email, requested pack, source page, and consent timestamp without granting credits or starting checkout |
 
 Do not replace the current production gallery-preview system with the prototype miniature. The approved Studio preview surface should be connected to that system after visual migration, as the user explicitly requested.
 
@@ -197,12 +197,15 @@ Public primary CTA: **Start in Studio**.
 Pricing launch contract:
 
 - Single Site — $29.99 one-time — 1 credit — active `Get 1 credit` purchase action
-- Freelancer — $74.99 one-time — 3 credits — Coming soon, disabled
-- Agency — $199.99 one-time — 10 credits — Most popular + Coming soon, disabled
-- Studio — $449.99 one-time — 25 credits — Coming soon, disabled
+- Freelancer — $74.99 one-time — 3 credits — Coming soon with `Notify me`
+- Agency — $199.99 one-time — 10 credits — Most popular + Coming soon with `Notify me`
+- Studio — $449.99 one-time — 25 credits — Coming soon with `Notify me`
 - One credit creates one complete website.
 - Credits never expire.
 - There is no subscription and no automatic renewal.
+- `Notify me` opens an inline, tier-specific email form. It must never initiate checkout or imply the pack is available.
+- Successful capture confirms the exact requested tier in place. Production must handle duplicate addresses, API failure, consent logging, and retry without losing the entered address.
+- The Single Site action retains `Secure checkout · Refund policy` directly beneath `Get 1 credit`.
 
 Use contextual internal actions:
 
@@ -344,6 +347,7 @@ Not implemented in this UI repository:
 - Database persistence
 - Logo upload/storage
 - Checkout or entitlement wiring (the Single Site control is visually active but remains a prototype route)
+- Waitlist persistence or email delivery (the prototype demonstrates the complete capture and success states locally)
 - Production website generation
 - Generation failure/retry handling
 - Real ZIP creation/download
@@ -369,7 +373,9 @@ These are deliberate integration boundaries, not missing visual pages.
 - [ ] Key targets are at least 44px and keyboard focus is visible.
 - [ ] Reduced-motion mode remains stable.
 - [ ] Generation errors and retry states are added using real backend results.
-- [ ] Pricing shows four tiers, with only Single Site purchasable at launch and all other pack controls natively disabled.
+- [ ] Pricing shows four tiers, with only Single Site purchasable at launch.
+- [ ] Each Coming soon pack collects a tier-specific email through `Notify me` and never enters checkout.
+- [ ] Waitlist submissions persist the email, requested pack, source, and consent timestamp and expose honest error/retry states.
 - [ ] ZIP download uses the production artifact endpoint.
 - [ ] The green X/star is absent.
 - [ ] Visual parity is compared against `artifacts/screenshots/` before release.

@@ -50,13 +50,18 @@ test("key page and Studio controls meet the 44px target gate", async ({ page }) 
   expect((await page.getByRole("button", { name: "Sign in" }).boundingBox())!.height).toBeGreaterThanOrEqual(44);
 });
 
-test("pricing exposes one live credit pack and three disabled launch packs", async ({ page }) => {
+test("pricing exposes one live purchase and captures upcoming-pack interest", async ({ page }) => {
   await page.goto("/pricing");
   await expect(page.getByRole("link", { name: "Get 1 credit" })).toHaveAttribute("href", "/studio?step=details");
-  for (const label of ["Get 3 credits", "Get 10 credits", "Get 25 credits"]) {
-    await expect(page.getByRole("button", { name: label })).toBeDisabled();
+  await expect(page.getByText(/Secure checkout/)).toBeVisible();
+  for (const tier of ["Freelancer", "Agency", "Studio"]) {
+    await expect(page.getByRole("button", { name: `Notify me about ${tier}` })).toBeEnabled();
   }
   await expect(page.getByText("Coming soon")).toHaveCount(3);
+  await page.getByRole("button", { name: "Notify me about Agency" }).click();
+  await page.getByRole("textbox", { name: "Email for Agency updates" }).fill("owner@example.com");
+  await page.getByRole("button", { name: "Join Agency waitlist" }).click();
+  await expect(page.getByRole("status")).toContainText("on the Agency waitlist");
 });
 
 test("Step 2 shows generation progress before replacing the PressPilot preview", async ({ page }) => {

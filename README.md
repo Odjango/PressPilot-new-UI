@@ -16,7 +16,7 @@ Open `http://localhost:4173`.
 ## Main routes
 
 - `/` — public homepage
-- `/pricing` — four-tier credit pricing page; only Single Site is enabled for launch
+- `/pricing` — four-tier credit pricing page; Single Site is purchasable and upcoming packs collect waitlist interest
 - `/signin` — sign-in page
 - `/projects` — project dashboard
 - `/studio?step=details` — Studio Step 1

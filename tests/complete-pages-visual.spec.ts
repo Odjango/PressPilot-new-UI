@@ -32,3 +32,14 @@ for (const [name, url, heading, width, height] of captures) {
     await page.screenshot({ path: `${outputDirectory}/${name}.png`, fullPage: true });
   });
 }
+
+test("captures app-pricing-waitlist", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/pricing", { waitUntil: "networkidle" });
+  await page.evaluate(() => document.fonts.ready);
+  await page.getByRole("button", { name: "Notify me about Agency" }).click();
+  await page.evaluate(() => { (document.activeElement as HTMLElement | null)?.blur(); window.scrollTo(0, 0); });
+  await page.addStyleTag({ content: "*,*::before,*::after{animation:none!important;transition:none!important}" });
+  await expect(page.getByRole("textbox", { name: "Email for Agency updates" })).toBeVisible();
+  await page.screenshot({ path: `${outputDirectory}/app-pricing-waitlist.png`, fullPage: true });
+});

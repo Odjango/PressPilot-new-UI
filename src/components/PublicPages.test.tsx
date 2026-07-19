@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { PricingPage } from "./PricingPage";
 import { ProjectsPage } from "./ProjectsPage";
 import { SignInPage } from "./SignInPage";
 
-test("presents all credit packs with only Single Site available at launch", () => {
+test("presents one live purchase and tier-specific waitlist capture for upcoming packs", () => {
   render(<PricingPage />);
   expect(screen.getByRole("heading", { name: "Simple, transparent pricing" })).toBeInTheDocument();
   for (const tier of ["Single Site", "Freelancer", "Agency", "Studio"]) {
@@ -14,14 +14,22 @@ test("presents all credit packs with only Single Site available at launch", () =
   }
 
   expect(screen.getByRole("link", { name: "Get 1 credit" })).toHaveAttribute("href", "/studio?step=details");
-  for (const label of ["Get 3 credits", "Get 10 credits", "Get 25 credits"]) {
-    expect(screen.getByRole("button", { name: label })).toBeDisabled();
+  expect(screen.getByText(/Secure checkout/)).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Refund policy" })).toHaveAttribute("href", "#refund-policy");
+  for (const tier of ["Freelancer", "Agency", "Studio"]) {
+    expect(screen.getByRole("button", { name: `Notify me about ${tier}` })).toBeEnabled();
   }
   expect(screen.getAllByText("Coming soon")).toHaveLength(3);
   expect(screen.getByText("Most popular")).toBeInTheDocument();
   expect(screen.getByText(/Credits never expire, and there's no subscription\./)).toBeInTheDocument();
   expect(screen.getByText("Is the output really a standards-compliant FSE site?")).toBeInTheDocument();
   expect(screen.getAllByRole("link", { name: /Start in Studio/ }).some((link) => link.getAttribute("href") === "/studio?step=details")).toBe(true);
+
+  fireEvent.click(screen.getByRole("button", { name: "Notify me about Agency" }));
+  const email = screen.getByRole("textbox", { name: "Email for Agency updates" });
+  fireEvent.change(email, { target: { value: "owner@example.com" } });
+  fireEvent.click(screen.getByRole("button", { name: "Join Agency waitlist" }));
+  expect(screen.getByRole("status")).toHaveTextContent("on the Agency waitlist");
 });
 
 test("gives returning users an accessible sign-in form", () => {
