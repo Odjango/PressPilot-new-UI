@@ -14,8 +14,8 @@ export function MarketingHeader() {
         <a href="/#examples">Website examples</a>
         <a href="/pricing">Pricing</a>
         <a href="/#help">Help</a>
-        <a className="marketing-nav__mobile" href="/signin">Sign in</a>
-        <a className="marketing-nav__mobile marketing-nav__mobile--primary" href="/studio?step=details">Start in Studio <ArrowUpRight size={15} /></a>
+        <a className="marketing-nav__mobile" href="/signin" aria-hidden={!menuOpen} tabIndex={menuOpen ? 0 : -1}>Sign in</a>
+        <a className="marketing-nav__mobile marketing-nav__mobile--primary" href="/studio?step=details" aria-hidden={!menuOpen} tabIndex={menuOpen ? 0 : -1}>Start in Studio <ArrowUpRight size={15} /></a>
       </nav>
       <div className="marketing-header__actions">
         <a className="marketing-signin" href="/signin">Sign in</a>
