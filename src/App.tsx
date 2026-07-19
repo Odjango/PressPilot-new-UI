@@ -3,6 +3,7 @@ import { AmbientBackground } from "./components/AmbientBackground";
 import { BusinessDetailsWorkspace } from "./components/BusinessDetailsWorkspace";
 import { CustomizationPanel } from "./components/CustomizationPanel";
 import { DownloadWorkspace } from "./components/DownloadWorkspace";
+import { LayoutChooserWorkspace } from "./components/LayoutChooserWorkspace";
 import { MarketingHome } from "./components/MarketingHome";
 import { PricingPage } from "./components/PricingPage";
 import { ProjectsPage } from "./components/ProjectsPage";
@@ -54,7 +55,7 @@ function StudioPrototype() {
   const handleChange = (next: StudioProjectSample) => setProject(next);
   const steps = getStepsForFlow(flow);
 
-  const workspace = flow === "details" ? <BusinessDetailsWorkspace project={project} onChange={handleChange} onContinue={() => setFlow("layout")} /> : flow === "layout" ? <h1>Choose a layout</h1> : flow === "customize" ? (
+  const workspace = flow === "details" ? <BusinessDetailsWorkspace project={project} onChange={handleChange} onContinue={() => setFlow("layout")} /> : flow === "layout" ? <LayoutChooserWorkspace project={project} onChange={handleChange} onBack={() => setFlow("details")} onContinue={() => setFlow("customize")} /> : flow === "customize" ? (
     <>
       <div className="refine-workspace">
         <CustomizationPanel project={project} onChange={handleChange} />
